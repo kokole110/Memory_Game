@@ -19,6 +19,33 @@ function closeModal () {
 		modal.style.display = "none";
 	}
 
+
+const stars = document.getElementsByClassName('stars')[0];
+function starBuilder () {
+		if (moves<=25) {
+			stars.innerHTML = `<li><i class="fa fa-star"></i></li>
+							   <li><i class="fa fa-star"></i></li>
+							   <li><i class="fa fa-star"></i></li>
+							   <li><i class="fa fa-star"></i></li>
+							   <li><i class="fa fa-star"></i></li>`
+		} else if ((moves>25) && (moves<=30)) {
+			stars.innerHTML = `<li><i class="fa fa-star"></i></li>
+							   <li><i class="fa fa-star"></i></li>
+							   <li><i class="fa fa-star"></i></li>
+							   <li><i class="fa fa-star"></i></li>`
+		} else if ((moves>30) && (moves<=35)) {
+			stars.innerHTML = `<li><i class="fa fa-star"></i></li>
+							   <li><i class="fa fa-star"></i></li>
+							   <li><i class="fa fa-star"></i></li>`
+		} else if ((moves>35) && (moves<=40)) {
+			stars.innerHTML = `<li><i class="fa fa-star"></i></li>
+							   <li><i class="fa fa-star"></i></li>`
+		} else if (moves>40) {
+			stars.innerHTML = `<li><i class="fa fa-star"></i></li>`
+		} 
+	}
+
+
 startGame();
 
 const restart = document.querySelectorAll('.restart');
@@ -28,12 +55,12 @@ restart.forEach (function (restartButton) {
 		moves = 0;
 		moveCounter();
 		closeModal();
+		starBuilder();
 		startGame();
 	})
 })
 
 function startGame () {
-
 	/*
 	 * Create a list that holds all of your cards
 	 */
@@ -49,12 +76,8 @@ function startGame () {
 	function createCard (card) {
 		return `<li class="card"><i class="fa ${card}"></i></li>`
 	}
-
 	/*
 	 * Display the cards on the page
-	 *   - shuffle the list of cards using the provided "shuffle" method below
-	 *   - loop through each card and create its HTML
-	 *   - add each card's HTML to the page
 	 */
 
 	function initGame() {
@@ -66,8 +89,7 @@ function startGame () {
 	}
 
 	initGame();
-
-	// Shuffle function from http://stackoverflow.com/a/2450976
+	// Shuffle function 
 	function shuffle(array) {
 	    var currentIndex = array.length, temporaryValue, randomIndex;
 
@@ -78,19 +100,11 @@ function startGame () {
 	        array[currentIndex] = array[randomIndex];
 	        array[randomIndex] = temporaryValue;
 	    }
-
 	    return array;
 	}
 
 	/*
 	 * set up the event listener for a card. If a card is clicked:
-	 *  - display the card's symbol (put this functionality in another function that you call from this one)
-	 *  - add the card to a *list* of "open" cards (put this functionality in another function that you call from this one)
-	 *  - if the list already has another card, check to see if the two cards match
-	 *    + if the cards do match, lock the cards in the open position (put this functionality in another function that you call from this one)
-	 *    + if the cards do not match, remove the cards from the list and hide the card's symbol (put this functionality in another function that you call from this one)
-	 *    + increment the move counter and display it on the page (put this functionality in another function that you call from this one)
-	 *    + if all cards have matched, display a message with the final score (put this functionality in another function that you call from this one)
 	 */
 
 	let allCards = document.querySelectorAll('.card');
@@ -109,6 +123,7 @@ function startGame () {
 					moves += 1;
 					console.log('add move');
 					moveCounter();
+					starBuilder();
 				};
 			};
 
@@ -117,7 +132,7 @@ function startGame () {
 				let checkingCard1 = openCards[0].getElementsByTagName('i')[0]; //getting [i] elements to be able to compare its classes
 				let checkingCard2 = openCards[1].getElementsByTagName('i')[0];
 
-				// comparing two cards
+				// compare two cards
 				if (checkingCard1.classList[1] == checkingCard2.classList[1]) {
 					console.log('matched');
 					matched += 1;
@@ -130,7 +145,7 @@ function startGame () {
 						openCards[0].classList.remove('open', 'show');
 						openCards[1].classList.remove('open', 'show');
 						openCards = [];
-					}, 2000);
+					}, 1000);
 				}
 			} 
 		})
