@@ -1,5 +1,5 @@
 
-// 
+
 let moves = 0;
 function moveCounter () {
 		let movesHTML = document.getElementsByClassName('moves')[0];
@@ -45,7 +45,6 @@ function starBuilder () {
 		} 
 	}
 
-
 startGame();
 
 const restart = document.querySelectorAll('.restart');
@@ -59,6 +58,18 @@ restart.forEach (function (restartButton) {
 		startGame();
 	})
 })
+
+
+
+// var timer;
+// function startTimer () {
+// 	timer = setTimeout(startGame);
+// };
+// function stopTimer () {
+// 	clearTimeout(timer);
+// };
+
+
 
 function startGame () {
 	/*
