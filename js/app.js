@@ -47,24 +47,26 @@ function starBuilder () {
 }
 
 let myVar;
-let matched=0;
+let timerHTML = document.getElementsByClassName("timer")[0];
 function startCount () {
-  let timer=1;
+  let timer = 1;
   myVar = setTimeout(function startTimer(){
     console.log(timer);
-    timer+=1;
-    setTimeout(startTimer, 1000);
-  }, 1000)
+    timerHTML.innerHTML = `Timer: ${timer} sec`;
+    timer += 1;
+    myVar = setTimeout(startTimer, 1000);
+  }, 1000)  
 }
-
 
 function stopCount () {
   clearTimeout(myVar);
 }
 
+let score = document.getElementsByClassName("score")[0];
+
+
 
 startGame();
-
 
 
 const restart = document.querySelectorAll('.restart');
@@ -72,7 +74,8 @@ restart.forEach (function (restartButton) {
 	restartButton.addEventListener('click', function() {
 		console.log("restart");
 		moves = 0;
-		moveCounter();
+    stopCount();
+    moveCounter();
 		closeModal();
 		starBuilder();
 		startGame();
@@ -131,7 +134,7 @@ function startGame () {
 
 	let allCards = document.querySelectorAll('.card');
 	let openCards = [];
-	// let matched = 0;
+	let matched = 0;
 
 	allCards.forEach(function(card) {
 		card.addEventListener('click', function(){
@@ -150,7 +153,6 @@ function startGame () {
 			};
 
 			if (openCards.length==2) {
-				
 				let checkingCard1 = openCards[0].getElementsByTagName('i')[0]; //getting [i] elements to be able to compare its classes
 				let checkingCard2 = openCards[1].getElementsByTagName('i')[0];
 
@@ -161,7 +163,6 @@ function startGame () {
 					openCards[0].classList.add('match');
 					openCards[1].classList.add('match');
 					endGameModal();
-
 					openCards = [];
 				} else { 
 					setTimeout(function() {
@@ -174,14 +175,13 @@ function startGame () {
 		})
 	})
 
-  
-
 	function endGameModal () {
-		if (matched == 1  ) {
+		if (matched == 8  ) {
       console.log("close");
       stopCount();
 			setTimeout(function() {
 				modal.style.display = "block";
+        score.innerHTML = (`Score: ${moves}`);
 			}, 1000);
 		}
 	}
