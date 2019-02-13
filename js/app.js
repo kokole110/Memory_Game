@@ -16,36 +16,56 @@ function moveCounter () {
 const modal = document.getElementById('end-game');
 const span = document.getElementsByClassName('close')[0];
 function closeModal () {
-		modal.style.display = "none";
+  modal.style.display = "none";
 	}
+span.onclick = function(){closeModal()};
 
 
 const stars = document.getElementsByClassName('stars')[0];
 function starBuilder () {
-		if (moves<=25) {
-			stars.innerHTML = `<li><i class="fa fa-star"></i></li>
-							   <li><i class="fa fa-star"></i></li>
-							   <li><i class="fa fa-star"></i></li>
-							   <li><i class="fa fa-star"></i></li>
-							   <li><i class="fa fa-star"></i></li>`
-		} else if ((moves>25) && (moves<=30)) {
-			stars.innerHTML = `<li><i class="fa fa-star"></i></li>
-							   <li><i class="fa fa-star"></i></li>
-							   <li><i class="fa fa-star"></i></li>
-							   <li><i class="fa fa-star"></i></li>`
-		} else if ((moves>30) && (moves<=35)) {
-			stars.innerHTML = `<li><i class="fa fa-star"></i></li>
-							   <li><i class="fa fa-star"></i></li>
-							   <li><i class="fa fa-star"></i></li>`
-		} else if ((moves>35) && (moves<=40)) {
-			stars.innerHTML = `<li><i class="fa fa-star"></i></li>
-							   <li><i class="fa fa-star"></i></li>`
-		} else if (moves>40) {
-			stars.innerHTML = `<li><i class="fa fa-star"></i></li>`
-		} 
-	}
+	if (moves<=25) {
+		stars.innerHTML = `<li><i class="fa fa-star"></i></li>
+						   <li><i class="fa fa-star"></i></li>
+						   <li><i class="fa fa-star"></i></li>
+						   <li><i class="fa fa-star"></i></li>
+						   <li><i class="fa fa-star"></i></li>`
+	} else if ((moves>25) && (moves<=30)) {
+		stars.innerHTML = `<li><i class="fa fa-star"></i></li>
+						   <li><i class="fa fa-star"></i></li>
+						   <li><i class="fa fa-star"></i></li>
+						   <li><i class="fa fa-star"></i></li>`
+	} else if ((moves>30) && (moves<=35)) {
+		stars.innerHTML = `<li><i class="fa fa-star"></i></li>
+						   <li><i class="fa fa-star"></i></li>
+						   <li><i class="fa fa-star"></i></li>`
+	} else if ((moves>35) && (moves<=40)) {
+		stars.innerHTML = `<li><i class="fa fa-star"></i></li>
+						   <li><i class="fa fa-star"></i></li>`
+	} else if (moves>40) {
+		stars.innerHTML = `<li><i class="fa fa-star"></i></li>`
+	} 
+}
+
+let myVar;
+let matched=0;
+function startCount () {
+  let timer=1;
+  myVar = setTimeout(function startTimer(){
+    console.log(timer);
+    timer+=1;
+    setTimeout(startTimer, 1000);
+  }, 1000)
+}
+
+
+function stopCount () {
+  clearTimeout(myVar);
+}
+
 
 startGame();
+
+
 
 const restart = document.querySelectorAll('.restart');
 restart.forEach (function (restartButton) {
@@ -59,30 +79,20 @@ restart.forEach (function (restartButton) {
 	})
 })
 
-
-
-// var timer;
-// function startTimer () {
-// 	timer = setTimeout(startGame);
-// };
-// function stopTimer () {
-// 	clearTimeout(timer);
-// };
-
-
-
 function startGame () {
-	/*
+  
+  startCount();
+  /*
 	 * Create a list that holds all of your cards
 	 */
 	const cardClass = ['fa-diamond', 'fa-diamond',
-				 'fa-paper-plane-o', 'fa-paper-plane-o',
-				 'fa-anchor', 'fa-anchor',
-				 'fa-bolt', 'fa-bolt',
-				 'fa-cube', 'fa-cube',
-				 'fa-leaf', 'fa-leaf',
-				 'fa-bicycle', 'fa-bicycle',
-				 'fa-bomb', 'fa-bomb'];
+    'fa-paper-plane-o','fa-paper-plane-o',
+    'fa-anchor', 'fa-anchor',
+    'fa-bolt', 'fa-bolt',
+    'fa-cube', 'fa-cube',
+    'fa-leaf', 'fa-leaf',
+    'fa-bicycle', 'fa-bicycle',
+    'fa-bomb', 'fa-bomb'];
 
 	function createCard (card) {
 		return `<li class="card"><i class="fa ${card}"></i></li>`
@@ -100,18 +110,19 @@ function startGame () {
 	}
 
 	initGame();
+
 	// Shuffle function 
 	function shuffle(array) {
-	    var currentIndex = array.length, temporaryValue, randomIndex;
+    var currentIndex = array.length, temporaryValue, randomIndex;
 
-	    while (currentIndex !== 0) {
-	        randomIndex = Math.floor(Math.random() * currentIndex);
-	        currentIndex -= 1;
-	        temporaryValue = array[currentIndex];
-	        array[currentIndex] = array[randomIndex];
-	        array[randomIndex] = temporaryValue;
-	    }
-	    return array;
+    while (currentIndex !== 0) {
+        randomIndex = Math.floor(Math.random() * currentIndex);
+        currentIndex -= 1;
+        temporaryValue = array[currentIndex];
+        array[currentIndex] = array[randomIndex];
+        array[randomIndex] = temporaryValue;
+    }
+    return array;
 	}
 
 	/*
@@ -120,7 +131,7 @@ function startGame () {
 
 	let allCards = document.querySelectorAll('.card');
 	let openCards = [];
-	let matched = 0;
+	// let matched = 0;
 
 	allCards.forEach(function(card) {
 		card.addEventListener('click', function(){
@@ -150,6 +161,7 @@ function startGame () {
 					openCards[0].classList.add('match');
 					openCards[1].classList.add('match');
 					endGameModal();
+
 					openCards = [];
 				} else { 
 					setTimeout(function() {
@@ -162,26 +174,18 @@ function startGame () {
 		})
 	})
 
+  
+
 	function endGameModal () {
-		if (matched == 8) {
+		if (matched == 1  ) {
+      console.log("close");
+      stopCount();
 			setTimeout(function() {
 				modal.style.display = "block";
-			}, 1000)
-		};
+			}, 1000);
+		}
 	}
 
-	span.onclick = closeModal();
-
-	function starRating () {
-		let starsNumber = document.querySelector('.stars').getElementsByTagName('li');
-		if ((moves>=6) && (moves<11)) {
-			starsNumber[0].remove();
-			
-		} else if (moves>=11 && moves<16) {
-			starsNumber[0,1].remove();
-				
-		};
-	};	
 }
 
 
