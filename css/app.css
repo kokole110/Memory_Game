@@ -91,6 +91,7 @@ h1 {
     margin-bottom: 10px;
 }
 
+.modal .stars_modal,
 .score-panel .stars {
     margin: 0;
     padding: 0;
@@ -98,6 +99,7 @@ h1 {
     margin: 0 5px 0 0;
 }
 
+.modal .stars_modal li,
 .score-panel .stars li {
     list-style: none;
     display: inline-block;

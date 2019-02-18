@@ -18,7 +18,8 @@ function closeModal () {
 span.onclick = function(){closeModal()};
 
 
-const stars = document.getElementsByClassName('stars')[0];
+let stars = document.getElementsByClassName('stars')[0];
+
 function starBuilder () {
   if (moves<=25) {
     stars.innerHTML =`<li><i class="fa fa-star"></i></li>
@@ -45,8 +46,9 @@ function starBuilder () {
 
 let myVar;
 let timerHTML = document.getElementsByClassName("timer")[0];
+let timer = 1;
 function startCount () {
-  let timer = 1;
+  // let timer = 1;
   myVar = setTimeout(function startTimer(){
     console.log(timer);
     timerHTML.innerHTML = `Timer: ${timer} sec`;
@@ -171,13 +173,17 @@ function startGame () {
     })
   })
 
+  let starsModal = document.getElementsByClassName('stars_modal')[0];
+  let timerModal = document.getElementsByClassName('timer_modal')[0];
   function endGameModal () {
     if (matched == 8) {
       console.log("close");
       stopCount();
       setTimeout(function() {
         modal.style.display = "block";
-        score.innerHTML = (`Score: ${moves}`);
+        starsModal.innerHTML = `${stars.innerHTML}`
+        score.innerHTML = (`Score: ${moves} moves`);
+        timerModal.innerHTML = `Time: ${timer-1}`;
       }, 1000);
     }
   }
